@@ -1,0 +1,14 @@
+  hydra2:
+    container_name: hydra2
+    restart: always
+    image: linuxserver/hydra2
+    volumes:
+      - ${USERDIR}/Downloads:/downloads
+      - ${USERDIR}/docker/hydra2/config:/config
+      - ${USERDIR}/docker/shared:/shared
+    ports:
+      - "5076:5076"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}

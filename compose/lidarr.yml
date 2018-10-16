@@ -1,0 +1,16 @@
+  lidarr:
+    image: "linuxserver/lidarr"
+    container_name: "lidarr"
+    volumes:
+      - ${USERDIR}/docker/lidarr/config:/config
+      - ${USERDIR}/Downloads:/data
+      - /shares/Public/Shared Music:/music
+      - "/etc/localtime:/etc/localtime:ro"
+      - ${USERDIR}/docker/shared:/shared
+    ports:
+        - "8686:8686"
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}

@@ -1,0 +1,39 @@
+  transmission:
+    container_name: transmission
+    image: haugene/transmission-openvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    restart: always
+    ports:
+    - "9091:9091"
+    - "51413:51413"
+    - "51413:51413/udp"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${USERDIR}/docker/transmission/config:/config
+      - ${USERDIR}/Downloads:/data
+      - ${USERDIR}/docker/shared:/shared
+    environment:
+      - OPENVPN_PROVIDER=NEWSHOSTING
+      - OPENVPN_CONFIG=dal-a01,dal-a02,dal-a03
+      - OPENVPN_USERNAME=<YOURUSERNAME>_<YOURMAILPROVIDER>.com@newshosting
+      - OPENVPN_PASSWORD=<YOURPASSWORD>
+      - OPENVPN_OPTS=--pull-filter ignore ping
+      - WEBPROXY_ENABLED=false
+      - OPENVPN_OPTS=--inactive 3600 --ping 10 --ping-exit 60
+      - LOCAL_NETWORK=192.168.1.0/24
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true
+      - TRANSMISSION_RPC_HOST_WHITELIST="127.0.0.1,192.168.*.*"
+      - TRANSMISSION_RPC_PASSWORD=<YOURPASSWORD>
+      - TRANSMISSION_RPC_USERNAME=<YOURUSERNAME>
+      - TRANSMISSION_UMASK=002
+      - TRANSMISSION_RATIO_LIMIT=1.00
+      - TRANSMISSION_RATIO_LIMIT_ENABLED=true

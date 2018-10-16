@@ -1,0 +1,29 @@
+  nzbget:
+    image: "jshridha/docker-nzbgetvpn"
+    container_name: "nzbget"
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ${USERDIR}/docker/nzbget/config:/config
+      - ${USERDIR}/Downloads:/data
+      - ${USERDIR}/docker/shared:/shared
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "6789:6789"
+    restart: always
+    environment:
+      - VPN_ENABLED=yes
+      - VPN_USER=<YOURUSERNAME>_<YOURMAILPROVIDER>.com@newshosting
+      - VPN_PASS=<YOUR_PASSWORD>
+      - VPN_PROV=custom
+      - VPN_REMOTE=dal-a01.wlvpn.com:443
+      - VPN_OPTIONS=
+      - STRICT_PORT_FORWARD=yes
+      - ENABLE_PRIVOXY=yes
+      - LAN_NETWORK=192.168.1.0/24
+      - NAME_SERVERS=8.8.8.8,8.8.4.4
+      - DEBUG=false
+      - UMASK=000
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
