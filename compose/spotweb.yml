@@ -1,0 +1,32 @@
+  database:
+    image: mariadb
+    container_name: "mariadb"
+    environment:
+      - MYSQL_DATABASE=spotweb
+      - MYSQL_PASSWORD=spotweb
+      - MYSQL_ROOT_PASSWORD=spotweb
+      - MYSQL_USER=spotweb
+    volumes:
+    - ${USERDIR}/docker/spotweb/spotweb_db:/var/lib/mysql
+  web:
+    image: "jgeusebroek/spotweb"
+    container_name: "spotweb"
+    volumes:
+      - ${USERDIR}/docker/spotweb/config:/config
+      - "/etc/localtime:/etc/localtime:ro"
+      - ${USERDIR}/docker/shared:/shared
+    ports:
+      - "9999:80"
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - SPOTWEB_DB_TYPE=pdo_mysql
+      - SPOTWEB_DB_HOST=mysql
+      - SPOTWEB_DB_NAME=spotweb
+      - SPOTWEB_DB_USER=spotweb
+      - SPOTWEB_DB_PASS=spotweb
+      - SPOTWEB_CRON_RETRIEVE=*/60 * * * *
+    links:
+      - database:mysql

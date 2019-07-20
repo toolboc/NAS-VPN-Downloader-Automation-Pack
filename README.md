@@ -15,4 +15,4 @@ Export the following vars (of course modify to your setup if needed):
 
 Then, for each container that you wish to run, navigate to the compose folder and modify the .yml file appropriately then run:
 
-    docker-compose -f <THEFILENAME> up -d
+    COMPOSE_OPTIONS="-e PUID=${PUID} -e PGID=${PGID} -e TZ=${TZ} -e USERDIR=${USERDIR}" docker-compose -f <THEFILENAME> up -d
