@@ -1,0 +1,18 @@
+---
+version: "2"
+services:
+  lazylibrarian:
+    image: linuxserver/lazylibrarian
+    container_name: lazylibrarian
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - DOCKER_MODS=linuxserver/calibre-web:calibre
+      - TZ=${TZ}
+    volumes:
+      - ${USERDIR}/docker/lazylibrarian/config:/config
+      - ${USERDIR}/Downloads:/data
+      - /shares/Public/Books:/books
+    ports:
+      - 5299:5299
+    restart: always

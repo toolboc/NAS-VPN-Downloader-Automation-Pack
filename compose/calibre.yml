@@ -1,0 +1,17 @@
+---
+version: "2"
+services:
+  calibre-web:
+    image: linuxserver/calibre-web
+    container_name: calibre-web
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DOCKER_MODS=linuxserver/calibre-web:calibre
+    volumes:
+      - ${USERDIR}/docker/calibre:/config
+      - /shares/Public/Books:/books
+    ports:
+      - 8083:8083
+    restart: unless-stopped

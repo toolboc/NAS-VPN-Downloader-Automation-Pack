@@ -1,0 +1,16 @@
+---
+version: "2"
+services:
+  mylar:
+    image: linuxserver/mylar
+    container_name: mylar
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    volumes:
+      - ${USERDIR}/docker/mylar/config:/config
+      - /shares/Public/Books/_Comics:/comics
+      - ${USERDIR}/Downloads:/downloads
+    ports:
+      - 8090:8090
+    restart: unless-stopped
